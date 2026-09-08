@@ -1,0 +1,74 @@
+// Rasphera — shared behaviour across all pages
+
+// Nav shrink on scroll
+const nav = document.getElementById('mainNav');
+if (nav) {
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+}
+
+// Scroll-reveal
+const revealEls = document.querySelectorAll('.reveal');
+if (revealEls.length) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold: 0.15});
+  revealEls.forEach(el => io.observe(el));
+}
+
+// Count-up numbers (only animates if data-count is a number > 0)
+const counters = document.querySelectorAll('.num[data-count]');
+if (counters.length) {
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count, 10);
+        if (!target) { cio.unobserve(el); return; }
+        const suffix = el.dataset.suffix || '';
+        let cur = 0;
+        const step = Math.max(1, Math.ceil(target / 40));
+        const tick = () => {
+          cur += step;
+          if (cur >= target) { el.textContent = target + suffix; }
+          else { el.textContent = cur + suffix; requestAnimationFrame(tick); }
+        };
+        tick();
+        cio.unobserve(el);
+      }
+    });
+  }, {threshold: 0.5});
+  counters.forEach(el => cio.observe(el));
+}
+
+// Games carousel (Games page only)
+const gcTrack = document.getElementById('gcTrack');
+if (gcTrack) {
+  const slides = gcTrack.querySelectorAll('.gc-slide');
+  const dotsWrap = document.getElementById('gcDots');
+  let idx = 0;
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'gc-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  function goTo(i) {
+    idx = (i + slides.length) % slides.length;
+    gcTrack.style.transform = `translateX(-${idx * 100}%)`;
+    dotsWrap.querySelectorAll('.gc-dot').forEach((d, di) => d.classList.toggle('active', di === idx));
+  }
+  document.getElementById('gcPrev')?.addEventListener('click', () => goTo(idx - 1));
+  document.getElementById('gcNext')?.addEventListener('click', () => goTo(idx + 1));
+  setInterval(() => goTo(idx + 1), 5000);
+}
+
+// Mobile nav toggle
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.querySelector('.navlinks');
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('mobile-open');
+  });
+}

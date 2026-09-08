@@ -1,5 +1,5 @@
 // Rasphera — shared behaviour across all pages
-
+document.body.classList.add('js-ready');
 // Nav shrink on scroll
 const nav = document.getElementById('mainNav');
 if (nav) {

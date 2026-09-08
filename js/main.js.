@@ -13,8 +13,14 @@ const revealEls = document.querySelectorAll('.reveal');
 if (revealEls.length) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, {threshold: 0.15});
+  }, {threshold: 0.05, rootMargin: '0px 0px -10% 0px'});
   revealEls.forEach(el => io.observe(el));
+
+  // Safety net: if a section is ever missed by the scroll observer
+  // (fast scrollbar drags, slow devices, etc.), force it visible anyway.
+  setTimeout(() => {
+    revealEls.forEach(el => el.classList.add('in'));
+  }, 1500);
 }
 
 // Count-up numbers (only animates if data-count is a number > 0)

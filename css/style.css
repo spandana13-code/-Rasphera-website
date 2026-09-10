@@ -34,7 +34,8 @@ section{position:relative;}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 0;transition:padding .3s ease, background .3s ease, box-shadow .3s ease;}
-nav.scrolled{padding:12px 0;background:rgba(251,249,244,0.94);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(13,36,57,0.08);}
+nav.dark{background:linear-gradient(rgba(13,36,57,0.85) 0%, rgba(13,36,57,0.5) 70%, rgba(13,36,57,0) 100%);padding-bottom:50px;margin-bottom:-50px;}
+nav.scrolled{padding:12px 0;background:rgba(251,249,244,0.94)!important;backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(13,36,57,0.08);margin-bottom:0;}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;}
 .brand{display:flex;align-items:center;gap:10px;}
 .brand img{height:38px;width:auto;transition:height .3s ease;}
@@ -85,9 +86,33 @@ nav.light .brand-text, nav.light .navlinks a{color:var(--navy);}
 .ql-head p{color:var(--muted);margin-top:10px;}
 .ql-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .ql-item{display:flex;flex-direction:column;align-items:center;gap:14px;flex:1;min-width:120px;cursor:pointer;}
-.ql-circle{width:84px;height:84px;border-radius:50%;background:var(--white);border:2px solid var(--navy);display:flex;align-items:center;justify-content:center;font-size:28px;transition:transform .3s cubic-bezier(.3,1.5,.5,1), background .3s ease, border-color .3s ease;}
-.ql-item:hover .ql-circle{transform:translateY(-8px) scale(1.08) rotate(-6deg);background:var(--amber);border-color:var(--amber);}
+.ql-circle{width:84px;height:84px;border-radius:50%;background:var(--white);border:2px solid var(--navy);display:flex;align-items:center;justify-content:center;color:var(--navy);transition:transform .3s cubic-bezier(.3,1.5,.5,1), background .3s ease, border-color .3s ease, color .3s ease;}
+.ql-circle svg{width:30px;height:30px;}
+.ql-item:hover .ql-circle{transform:translateY(-8px) scale(1.08) rotate(-6deg);background:var(--amber);border-color:var(--amber);color:var(--white);}
 .ql-item span.label{font-size:13.5px;font-weight:700;text-align:center;color:var(--navy);}
+
+/* 3D ROTATING DICE (hero) */
+.dice-scene{perspective:1000px;width:240px;height:240px;margin:0 auto;}
+.dice-cube{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:diceSpin 16s linear infinite;}
+.dice-face{position:absolute;width:240px;height:240px;left:0;top:0;background:var(--navy);border:2px solid rgba(255,255,255,0.18);border-radius:22px;box-shadow:inset 0 0 40px rgba(0,0,0,0.25);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:34px;box-sizing:border-box;}
+.dice-face span{width:30px;height:30px;border-radius:50%;justify-self:center;align-self:center;background:transparent;}
+.f-front{transform:translateZ(120px);}
+.f-back{transform:rotateY(180deg) translateZ(120px);}
+.f-right{transform:rotateY(90deg) translateZ(120px);}
+.f-left{transform:rotateY(-90deg) translateZ(120px);}
+.f-top{transform:rotateX(90deg) translateZ(120px);}
+.f-bottom{transform:rotateX(-90deg) translateZ(120px);}
+.n1 span:nth-child(5){background:var(--amber-2);}
+.n2 span:nth-child(1),.n2 span:nth-child(9){background:var(--white);}
+.n3 span:nth-child(1),.n3 span:nth-child(5),.n3 span:nth-child(9){background:var(--white);}
+.n4 span:nth-child(1),.n4 span:nth-child(3),.n4 span:nth-child(7),.n4 span:nth-child(9){background:var(--white);}
+.n5 span:nth-child(1),.n5 span:nth-child(3),.n5 span:nth-child(5),.n5 span:nth-child(7),.n5 span:nth-child(9){background:var(--amber-2);}
+.n6 span:nth-child(1),.n6 span:nth-child(3),.n6 span:nth-child(4),.n6 span:nth-child(6),.n6 span:nth-child(7),.n6 span:nth-child(9){background:var(--white);}
+@keyframes diceSpin{from{transform:rotateX(-18deg) rotateY(0deg);}to{transform:rotateX(-18deg) rotateY(360deg);}}
+@media (prefers-reduced-motion: reduce){.dice-cube{animation:none;transform:rotateX(-18deg) rotateY(28deg);}}
+
+/* TILT-ON-HOVER (applied via JS to elements with .tilt) */
+.tilt{transition:transform .15s ease-out;transform-style:preserve-3d;will-change:transform;}
 
 /* DARK FEATURE SECTION (pillars / product-style cards) */
 .dark-section{background:var(--navy);padding:100px 0;position:relative;overflow:hidden;}

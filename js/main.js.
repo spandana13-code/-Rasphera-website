@@ -1,5 +1,10 @@
 // Rasphera — shared behaviour across all pages
+
+// Mark JS as working — only THEN do reveal elements start hidden.
+// If this line never runs (script blocked/broken), .reveal content
+// stays visible by default thanks to the CSS fallback.
 document.body.classList.add('js-ready');
+
 // Nav shrink on scroll
 const nav = document.getElementById('mainNav');
 if (nav) {
@@ -78,3 +83,16 @@ if (navToggle && navLinks) {
     navLinks.classList.toggle('mobile-open');
   });
 }
+
+// 3D tilt-on-hover for cards
+document.querySelectorAll('.tilt').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(700px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(6px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(700px) rotateY(0) rotateX(0) translateZ(0)';
+  });
+});

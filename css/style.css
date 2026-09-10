@@ -1,16 +1,17 @@
 /* ===== Rasphera — Shared Stylesheet ===== */
 :root{
-  --navy:#0D2439;
+  --navy:#102940;
   --navy-2:#153252;
   --navy-3:#1D3F63;
   --amber:#E17027;
   --amber-2:#F0932B;
-  --paper:#FBF9F4;
-  --paper-2:#F2ECDF;
-  --ink:#0D2439;
-  --muted:#5A6B7D;
+  --paper:#FAF8F3;
+  --paper-2:#E9E2D8;
+  --ink:#102940;
+  --muted:#53616C;
   --line:#DCD2B8;
   --white:#FFFFFF;
+  --sage:#A7B49F;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}

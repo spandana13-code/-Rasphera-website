@@ -96,3 +96,17 @@ document.querySelectorAll('.tilt').forEach(card => {
     card.style.transform = 'perspective(700px) rotateY(0) rotateX(0) translateZ(0)';
   });
 });
+
+// Subtle parallax on hero photos
+const heroCards = document.querySelector('.hero-cards');
+const statsSection = document.getElementById('statsSection');
+if (heroCards) {
+  const main = heroCards.querySelector('.hcard-main');
+  const back = heroCards.querySelector('.hcard-back');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (main) main.style.transform = `translateY(${y * 0.08}px)`;
+    if (back) back.style.transform = `rotate(9deg) translateY(${y * -0.05}px)`;
+    if (statsSection) statsSection.style.transform = `translateY(${Math.max(-14, -y * 0.03)}px)`;
+  });
+}
